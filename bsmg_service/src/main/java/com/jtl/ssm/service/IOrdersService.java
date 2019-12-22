@@ -12,10 +12,11 @@ import java.util.List;
 public interface IOrdersService {
 
     /**
-     *
      * @param page
      * @param size
      * @return
      */
-    public List<Orders> findAll(int page ,int size);
+    public List<Orders> findAll(int page, int size);
+
+    public Orders findById(Integer ordersId);
 }
