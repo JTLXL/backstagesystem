@@ -65,7 +65,7 @@ public class Product {
 
     public String getDepartureTimeStr() {
         if (departureTime != null) {
-            departureTimeStr = DateUtils.Date2String(departureTime, "yyyy-MM-dd HH:mm:ss");
+            departureTimeStr = DateUtils.date2String(departureTime, "yyyy-MM-dd HH:mm:ss");
         }
         return departureTimeStr;
     }

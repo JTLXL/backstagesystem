@@ -16,6 +16,15 @@ import java.util.List;
  */
 @Repository
 public interface IProductDao {
+
+    /**
+     * 根据id查询产品信息
+     * @param id
+     * @return
+     */
+    @Select("select * from product where id=#{id}")
+    public Product findById(Integer id);
+
     /**
      * 查询所有的产品信息
      *

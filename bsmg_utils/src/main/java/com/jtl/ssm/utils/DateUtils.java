@@ -16,7 +16,7 @@ public class DateUtils {
      * @param patt
      * @return
      */
-    public static String Date2String(Date date, String patt) {
+    public static String date2String(Date date, String patt) {
         SimpleDateFormat sdf = new SimpleDateFormat(patt);
         String format = sdf.format(date);
         return format;
