@@ -30,18 +30,19 @@ public class ProductController {
     public ModelAndView findAll() throws Exception {
         ModelAndView mv = new ModelAndView();
         List<Product> ps = productService.findAll();
-        mv.addObject("productList",ps);
+        mv.addObject("productList", ps);
         mv.setViewName("product-list1");
         return mv;
     }
 
     /**
      * 产品添加
+     *
      * @param product
      */
     @RequestMapping("/save.do")
-    public String save(Product product){
-        System.out.println("*****"+product.getProductStatus()+"********");
+    public String save(Product product) {
+        System.out.println("*****" + product.getProductStatus() + "********");
         productService.save(product);
         return "redirect:findAll.do";
     }
@@ -55,4 +56,5 @@ public class ProductController {
         }
 
     }
+
 }
