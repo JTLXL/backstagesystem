@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+         pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +11,7 @@
     <title>数据 - AdminLTE2定制版</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
-    -
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta
             content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
@@ -109,8 +109,7 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" title="新建"
-                                            onclick="location.href='${pageContext.request.contextPath}/pages/user-add.jsp'">
+                                    <button type="button" class="btn btn-default" title="新建">
                                         <i class="fa fa-file-o"></i> 新建
                                     </button>
 
@@ -130,52 +129,37 @@
                         <!--工具栏/-->
 
                         <!--数据列表-->
-                        <table id="dataList"
-                               class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th class="" style="padding-right: 0px"><input
-                                        id="selall" type="checkbox" class="icheckbox_square-blue">
-                                </th>
-                                <th class="sorting_asc">ID</th>
-                                <th class="sorting_desc">用户名</th>
-                                <th class="sorting_asc sorting_asc_disabled">邮箱</th>
-                                <th class="sorting_desc sorting_desc_disabled">联系电话</th>
-                                <th class="sorting">状态</th>
-                                <th class="text-center">操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <c:forEach items="${userList}" var="user">
+                        <div class="tab-pane" id="tab-treetable">
+                            <table id="collapse-table"
+                                   class="table table-bordered table-hover dataTable">
+                                <thead>
                                 <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>${user.id }</td>
-                                    <td>${user.username }</td>
-                                    <td>${user.email }</td>
-                                    <td>${user.phoneNum }</td>
-                                    <td>${user.statusStr }</td>
-                                    <td class="text-center">
-                                            <%--<a href="${pageContext.request.contextPath}/user/findById.do?id=${user.id}" class="btn bg-olive btn-xs">详情</a>--%>
-                                        <a href="${pageContext.request.contextPath}/user/findById.do/${user.id}"
-                                           class="btn bg-olive btn-xs">详情</a>
-                                        <a href="${pageContext.request.contextPath}/user/findUserByIdAndAllRole.do?id=${user.id}"
-                                           class="btn bg-olive btn-xs">添加角色</a>
-                                    </td>
+                                    <th>名称</th>
+                                    <th>描述</th>
                                 </tr>
-                            </c:forEach>
-                            </tbody>
-                            <!--
-                        <tfoot>
-                        <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                        </tr>
-                        </tfoot>-->
-                        </table>
+                                </thead>
+
+                                <tr data-tt-id="0">
+                                    <td colspan="2">${user.username}</td>
+                                </tr>
+
+                                <tbody>
+                                <c:forEach items="${user.roles}" var="role">
+                                    <tr data-tt-id="1" data-tt-parent-id="0">
+                                        <td>${role.roleName }</td>
+                                        <td>${role.roleDesc }</td>
+                                    </tr>
+                                    <c:forEach items="${role.permissions}" var="permission">
+                                        <tr data-tt-id="1-1" data-tt-parent-id="1">
+                                            <td>${permission.permissionName}</td>
+                                            <td>${permission.url}</td>
+                                        </tr>
+
+                                    </c:forEach>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                         <!--数据列表/-->
 
                     </div>
@@ -266,8 +250,7 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-markdown/js/to-markdown.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/ckeditor/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.js"></script>
-<script
-        src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -287,6 +270,9 @@
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
         });
+        $("#collapse-table").treetable({
+            expandable: true
+        });
     });
 
     // 设置激活菜单
@@ -298,40 +284,27 @@
         }
     }
 
-    $(document)
-        .ready(
-            function () {
+    $(document).ready(function () {
 
-                // 激活导航位置
-                setSidebarActive("admin-datalist");
+        // 激活导航位置
+        setSidebarActive("admin-datalist");
 
-                // 列表按钮
-                $("#dataList td input[type='checkbox']")
-                    .iCheck(
-                        {
-                            checkboxClass: 'icheckbox_square-blue',
-                            increaseArea: '20%'
-                        });
-                // 全选操作
-                $("#selall")
-                    .click(
-                        function () {
-                            var clicks = $(this).is(
-                                ':checked');
-                            if (!clicks) {
-                                $(
-                                    "#dataList td input[type='checkbox']")
-                                    .iCheck(
-                                        "uncheck");
-                            } else {
-                                $(
-                                    "#dataList td input[type='checkbox']")
-                                    .iCheck("check");
-                            }
-                            $(this).data("clicks",
-                                !clicks);
-                        });
-            });
+        // 列表按钮
+        $("#dataList td input[type='checkbox']").iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            increaseArea: '20%'
+        });
+        // 全选操作
+        $("#selall").click(function () {
+            var clicks = $(this).is(':checked');
+            if (!clicks) {
+                $("#dataList td input[type='checkbox']").iCheck("uncheck");
+            } else {
+                $("#dataList td input[type='checkbox']").iCheck("check");
+            }
+            $(this).data("clicks", !clicks);
+        });
+    });
 </script>
 </body>
 
