@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.jtl.ssm.domain.Orders;
 import com.jtl.ssm.service.IOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ public class OrdersController {
         return mv;
     }*/
     @RequestMapping("findAll.do")
+    @Secured("ROLE_ADMIN")
     public ModelAndView findAll(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "5") int size) {
         ModelAndView mv = new ModelAndView();
         List<Orders> ordersList = ordersService.findAll(page, size);

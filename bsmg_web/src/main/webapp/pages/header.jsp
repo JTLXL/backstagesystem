@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <!-- 页面头部 -->
 <header class="main-header">
@@ -25,7 +26,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="${pageContext.request.contextPath}/img/userjtl.jpg" class="user-image"
                              alt="User Image">
-                        <span class="hidden-xs">JTL</span>
+                        <span class="hidden-xs"><security:authentication
+                                property="principal.username"></security:authentication></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -34,7 +36,8 @@
                                  class="img-circle" alt="User Image">
 
                             <p>
-                                JTL - 数据管理员
+                                <security:authentication property="principal.username"></security:authentication>
+                                - 数据管理员
                                 <small>最后登录 11:20AM</small>
                             </p>
                         </li>

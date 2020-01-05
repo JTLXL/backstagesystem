@@ -1,5 +1,6 @@
 package com.jtl.ssm.dao;
 
+import com.jtl.ssm.domain.Role;
 import com.jtl.ssm.domain.UserInfo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -45,9 +46,20 @@ public interface IUserDao {
             @Result(property = "email", column = "email"),
             @Result(property = "password", column = "password"),
             @Result(property = "phoneNum", column = "phoneNum"),
-            @Result(property = "phoneNum", column = "phoneNum"),
             @Result(property = "status", column = "status"),
             @Result(property = "roles", column = "id", javaType = java.util.List.class, many = @Many(select = "com.jtl.ssm.dao.IRoleDao.findRoleByUserId"))
     })
     UserInfo findById(Integer id);
+
+    @Select("select * from role where id not in (select roleId from users_role where userId=#{userId})")
+    List<Role> findOtherRoles(Integer userId);
+
+    /**
+     * 给用户添加角色
+     *
+     * @param userId
+     * @param roleId
+     */
+    @Insert("insert into users_role(userId,roleId) values(#{userId},#{roleId})")
+    void addRoleToUser(@Param("userId") Integer userId, @Param("roleId")Integer roleId);
 }

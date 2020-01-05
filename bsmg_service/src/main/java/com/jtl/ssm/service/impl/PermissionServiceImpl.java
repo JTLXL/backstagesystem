@@ -14,7 +14,7 @@ import java.util.List;
  * @description
  */
 @Service
-public class PermissionService implements IPermissionService {
+public class PermissionServiceImpl implements IPermissionService {
 
     @Autowired
     private IPermissionDao permissionDao;

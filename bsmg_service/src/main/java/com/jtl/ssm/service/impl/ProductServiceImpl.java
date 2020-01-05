@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Service
 @Transactional //开启事务 for save操作
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductDao productDao;
