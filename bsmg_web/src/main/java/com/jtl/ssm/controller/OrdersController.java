@@ -39,7 +39,7 @@ public class OrdersController {
     }*/
     @RequestMapping("findAll.do")
     @Secured("ROLE_ADMIN")
-    public ModelAndView findAll(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "5") int size) {
+    public ModelAndView findAll(@RequestParam(name = "page", defaultValue = "1") Integer page, @RequestParam(name = "size", defaultValue = "5") Integer size) {
         ModelAndView mv = new ModelAndView();
         List<Orders> ordersList = ordersService.findAll(page, size);
         // PageInfo就是一个分页bean 通过其构造方法最后得到的结果集是PageInfo对象中的一个list字段属性
